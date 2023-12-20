@@ -1,0 +1,898 @@
+LINHA DE CODIGO C
+
+
+#include <stdio.h> 
+
+#include <stdlib.h> 
+
+#include <string.h> 
+
+  
+
+struct Cliente { 
+
+    int id; 
+
+    char nome[50]; 
+
+    char celular[20]; 
+
+    char cpf[15]; 
+
+    char senha[50]; // Adicionando campo senha 
+
+}; 
+
+  
+
+struct Funcionario { 
+
+    int id; 
+
+    char nome[50]; 
+
+    char cargo[50]; 
+
+    char cpf[15]; 
+
+}; 
+
+  
+
+struct Fornecedor { 
+
+    int id; 
+
+    char nome[50]; 
+
+    char cnpj[20]; 
+
+}; 
+
+  
+
+struct Carro { 
+
+    int id; 
+
+    char marca[50]; 
+
+    char modelo[50]; 
+
+    char ano[5]; 
+
+}; 
+
+  
+
+struct ProgramData { 
+
+    struct Cliente clientes[100]; 
+
+    int contadorClientes; 
+
+    struct Funcionario funcionarios[100]; 
+
+    int contadorFuncionarios; 
+
+    struct Fornecedor fornecedores[100]; 
+
+    int contadorFornecedores; 
+
+    struct Carro carros[100]; 
+
+    int contadorCarros; 
+
+}; 
+
+  
+
+  
+
+int realizarLogin(struct ProgramData *data) { 
+
+    char cpf[15]; 
+
+    char senha[50]; 
+
+  
+
+    printf("Digite o CPF: "); 
+
+    scanf(" %[^\n]", cpf); 
+
+    printf("Digite a senha: "); 
+
+    scanf(" %[^\n]", senha); 
+
+  
+
+    for (int i = 0; i < data->contadorClientes; i++) { 
+
+        // Verifica se o CPF e a senha coincidem 
+
+        if (strcmp(cpf, data->clientes[i].cpf) == 0 && 
+
+            strcmp(senha, data->clientes[i].senha) == 0) { 
+
+            return i; // Retorna o índice do cliente autenticado 
+
+        } 
+
+    } 
+
+  
+
+    // Se não encontrar correspondência, retorna -1 
+
+    return -1; 
+
+} 
+
+  
+
+void cadastrarCliente(struct ProgramData *data); 
+
+int realizarLogin(struct ProgramData *data); 
+
+  
+
+void cadastrarCliente(struct ProgramData *data) { 
+
+    printf("Cadastro de Cliente:\n"); 
+
+    printf("Digite o nome do cliente: "); 
+
+    scanf(" %[^\n]", data->clientes[data->contadorClientes].nome); 
+
+    printf("Digite o celular do cliente: "); 
+
+    scanf(" %[^\n]", data->clientes[data->contadorClientes].celular); 
+
+    printf("Digite o CPF do cliente: "); 
+
+    scanf(" %[^\n]", data->clientes[data->contadorClientes].cpf); 
+
+  
+
+    // Adicionando a opção de cadastrar senha 
+
+    printf("Digite a senha para o cliente: "); 
+
+    scanf(" %[^\n]", data->clientes[data->contadorClientes].senha); 
+
+  
+
+    data->clientes[data->contadorClientes].id = data->contadorClientes + 1; 
+
+    data->contadorClientes++; 
+
+  
+
+    printf("Cliente cadastrado com sucesso! ID: %d\n", data->clientes[data->contadorClientes - 1].id); 
+
+} 
+
+  
+
+void cadastrarFuncionario(struct ProgramData *data) { 
+
+    printf("Cadastro de Funcionário:\n"); 
+
+    printf("Digite o nome do funcionário: "); 
+
+    scanf(" %[^\n]", data->funcionarios[data->contadorFuncionarios].nome); 
+
+    printf("Digite o cargo do funcionário: "); 
+
+    scanf(" %[^\n]", data->funcionarios[data->contadorFuncionarios].cargo); 
+
+    printf("Digite o CPF do funcionário: "); 
+
+    scanf(" %[^\n]", data->funcionarios[data->contadorFuncionarios].cpf); 
+
+  
+
+    data->funcionarios[data->contadorFuncionarios].id = data->contadorFuncionarios + 1; 
+
+    data->contadorFuncionarios++; 
+
+    printf("Funcionário cadastrado com sucesso! ID: %d\n", data->funcionarios[data->contadorFuncionarios - 1].id); 
+
+} 
+
+  
+
+void cadastrarFornecedor(struct ProgramData *data) { 
+
+    printf("Cadastro de Fornecedor:\n"); 
+
+    printf("Digite o nome do fornecedor: "); 
+
+    scanf(" %[^\n]", data->fornecedores[data->contadorFornecedores].nome); 
+
+    printf("Digite o CNPJ do fornecedor: "); 
+
+    scanf(" %[^\n]", data->fornecedores[data->contadorFornecedores].cnpj); 
+
+  
+
+    data->fornecedores[data->contadorFornecedores].id = data->contadorFornecedores + 1; 
+
+    data->contadorFornecedores++; 
+
+    printf("Fornecedor cadastrado com sucesso! ID: %d\n", data->fornecedores[data->contadorFornecedores - 1].id); 
+
+} 
+
+  
+
+void cadastrarCarro(struct ProgramData *data) { 
+
+    printf("Cadastro de Carro:\n"); 
+
+    printf("Digite a marca do carro: "); 
+
+    scanf(" %[^\n]", data->carros[data->contadorCarros].marca); 
+
+    printf("Digite o modelo do carro: "); 
+
+    scanf(" %[^\n]", data->carros[data->contadorCarros].modelo); 
+
+    printf("Digite o ano do carro: "); 
+
+    scanf(" %[^\n]", data->carros[data->contadorCarros].ano); 
+
+  
+
+    data->carros[data->contadorCarros].id = data->contadorCarros + 1; 
+
+    data->contadorCarros++; 
+
+    printf("Carro cadastrado com sucesso! ID: %d\n", data->carros[data->contadorCarros - 1].id); 
+
+} 
+
+  
+
+void editarCliente(struct ProgramData *data) { 
+
+    int id; 
+
+    printf("Digite o ID do cliente que deseja editar: "); 
+
+    scanf("%d", &id); 
+
+  
+
+    if (id <= 0 || id > data->contadorClientes) { 
+
+        printf("ID inválido. Tente novamente.\n"); 
+
+        return; 
+
+    } 
+
+  
+
+    printf("Editar Cliente ID: %d\n", id); 
+
+    printf("Digite o novo nome do cliente: "); 
+
+    scanf(" %[^\n]", data->clientes[id - 1].nome); 
+
+    printf("Digite o novo celular do cliente: "); 
+
+    scanf(" %[^\n]", data->clientes[id - 1].celular); 
+
+    printf("Digite o novo CPF do cliente: "); 
+
+    scanf(" %[^\n]", data->clientes[id - 1].cpf); 
+
+    printf("Cliente editado com sucesso!\n"); 
+
+} 
+
+  
+
+void editarFuncionario(struct ProgramData *data) { 
+
+    int id; 
+
+    printf("Digite o ID do funcionário que deseja editar: "); 
+
+    scanf("%d", &id); 
+
+  
+
+    if (id <= 0 || id > data->contadorFuncionarios) { 
+
+        printf("ID inválido. Tente novamente.\n"); 
+
+        return; 
+
+    } 
+
+  
+
+    printf("Editar Funcionário ID: %d\n", id); 
+
+    printf("Digite o novo nome do funcionário: "); 
+
+    scanf(" %[^\n]", data->funcionarios[id - 1].nome); 
+
+    printf("Digite o novo cargo do funcionário: "); 
+
+    scanf(" %[^\n]", data->funcionarios[id - 1].cargo); 
+
+    printf("Digite o novo CPF do funcionário: "); 
+
+    scanf(" %[^\n]", data->funcionarios[id - 1].cpf); 
+
+    printf("Funcionário editado com sucesso!\n"); 
+
+} 
+
+  
+
+void editarCarro(struct ProgramData *data) { 
+
+    int id; 
+
+    printf("Digite o ID do carro que deseja editar: "); 
+
+    scanf("%d", &id); 
+
+  
+
+    if (id <= 0 || id > data->contadorCarros) { 
+
+        printf("ID inválido. Tente novamente.\n"); 
+
+        return; 
+
+    } 
+
+  
+
+    printf("Editar Carro ID: %d\n", id); 
+
+    printf("Digite a nova marca do carro: "); 
+
+    scanf(" %[^\n]", data->carros[id - 1].marca); 
+
+    printf("Digite o novo modelo do carro: "); 
+
+    scanf(" %[^\n]", data->carros[id - 1].modelo); 
+
+    printf("Digite o novo ano do carro: "); 
+
+    scanf(" %[^\n]", data->carros[id - 1].ano); 
+
+    printf("Carro editado com sucesso!\n"); 
+
+} 
+
+  
+
+void editarFornecedores(struct ProgramData *data) { 
+
+    int id; 
+
+    printf("Digite o ID do Fornecedor que deseja editar: "); 
+
+    scanf("%d", &id); 
+
+  
+
+    if (id <= 0 || id > data->contadorFornecedores) { 
+
+        printf("ID inválido. Tente novamente.\n"); 
+
+        return; 
+
+    } 
+
+printf("Editar Fornecedor ID: %d\n", id); 
+
+printf("Editar o nome do fornecedor: "); 
+
+scanf(" %[^\n]", data->fornecedores[id - 1].nome); 
+
+printf("Editar o CNPJ do fornecedor: "); 
+
+scanf(" %[^\n]", data->fornecedores[id - 1].cnpj); 
+
+  
+
+} 
+
+  
+
+void listarClientes(struct ProgramData *data) { 
+
+    if (data->contadorClientes == 0) { 
+
+        printf("Nenhum cliente cadastrado.\n"); 
+
+    } else { 
+
+        printf("Lista de Clientes:\n"); 
+
+        for (int i = 0; i < data->contadorClientes; i++) { 
+
+            printf("ID: %d\n", data->clientes[i].id); 
+
+            printf("Nome: %s\n", data->clientes[i].nome); 
+
+            printf("Celular: %s\n", data->clientes[i].celular); 
+
+            printf("CPF: %s\n", data->clientes[i].cpf); 
+
+            printf("\n"); 
+
+        } 
+
+    } 
+
+} 
+
+  
+
+void listarFuncionarios(struct ProgramData *data) { 
+
+    if (data->contadorFuncionarios == 0) { 
+
+        printf("Nenhum funcionário cadastrado.\n"); 
+
+    } else { 
+
+        printf("Lista de Funcionários:\n"); 
+
+        for (int i = 0; i < data->contadorFuncionarios; i++) { 
+
+            printf("ID: %d\n", data->funcionarios[i].id); 
+
+            printf("Nome: %s\n", data->funcionarios[i].nome); 
+
+            printf("Cargo: %s\n", data->funcionarios[i].cargo); 
+
+            printf("CPF: %s\n", data->funcionarios[i].cpf); 
+
+            printf("\n"); 
+
+        } 
+
+    } 
+
+} 
+
+  
+
+void listarFornecedores(struct ProgramData *data) { 
+
+    if (data->contadorFornecedores == 0) { 
+
+        printf("Nenhum fornecedor cadastrado.\n"); 
+
+    } else { 
+
+        printf("Lista de Fornecedores:\n"); 
+
+        for (int i = 0; i < data->contadorFornecedores; i++) { 
+
+            printf("ID: %d\n", data->fornecedores[i].id); 
+
+            printf("Nome: %s\n", data->fornecedores[i].nome); 
+
+            printf("CNPJ: %s\n", data->fornecedores[i].cnpj); 
+
+            printf("\n"); 
+
+        } 
+
+    } 
+
+} 
+
+  
+
+void listarCarros(struct ProgramData *data) { 
+
+    if (data->contadorCarros == 0) { 
+
+        printf("Nenhum carro cadastrado.\n"); 
+
+    } else { 
+
+        printf("Lista de Carros:\n"); 
+
+        for (int i = 0; i < data->contadorCarros; i++) { 
+
+            printf("ID: %d\n", data->carros[i].id); 
+
+            printf("Marca: %s\n", data->carros[i].marca); 
+
+            printf("Modelo: %s\n", data->carros[i].modelo); 
+
+            printf("Ano: %s\n", data->carros[i].ano); 
+
+            printf("\n"); 
+
+        } 
+
+    } 
+
+} 
+
+  
+
+int main() { 
+
+    int escolha; 
+
+    int tipoUsuario; 
+
+    int clienteLogado = -1; 
+
+  
+
+    struct ProgramData programData; 
+
+    programData.contadorClientes = 0; 
+
+    programData.contadorFuncionarios = 0; 
+
+    programData.contadorFornecedores = 0; 
+
+  
+
+voltarInicio: 
+
+    do { 
+
+        printf("Digite o tipo de acesso: \n"); 
+
+        printf("0 - Para acessar como usuário \n"); 
+
+        printf("1 - Para acessar como administrador \n"); 
+
+        scanf("%d", &tipoUsuario); 
+
+  
+
+        if (tipoUsuario != 0 && tipoUsuario != 1) { 
+
+            printf("Tipo de usuário inválido. Tente novamente.\n"); 
+
+            continue; 
+
+        } 
+
+  
+
+        if (tipoUsuario == 1) { 
+
+            int senha; 
+
+            do { 
+
+                printf("Digite a senha de administrador: "); 
+
+                scanf("%d", &senha); 
+
+  
+
+                if (senha != 1020) { 
+
+                    printf("Senha incorreta. Tente novamente.\n"); 
+
+                } else { 
+
+                    break; 
+
+                } 
+
+            } while (senha != 1020); 
+
+        } 
+
+  
+
+        else { 
+
+            printf("Menu:\n"); 
+
+            printf("1. Cadastrar Cliente\n"); 
+
+            printf("2. Realizar Login\n"); 
+
+            printf("3. Sair\n"); 
+
+            printf("Escolha uma opção: "); 
+
+            scanf("%d", &escolha); 
+
+  
+
+            switch (escolha) { 
+
+                case 1: 
+
+                    cadastrarCliente(&programData); 
+
+                    goto voltarInicio; 
+
+                case 2: 
+
+                    clienteLogado = realizarLogin(&programData); 
+
+                    if (clienteLogado != -1) { 
+
+                printf("Login bem-sucedido! Bem-vindo, %s.\n",programData.clientes[clienteLogado].nome);  
+
+                        printf("Esta tela ainda está em desenvolvimento\n"); 
+
+                        goto voltarInicio; 
+
+                    } else { 
+
+                        printf("Login falhou. Verifique CPF e senha.\n"); 
+
+                        goto voltarInicio; 
+
+                    } 
+
+                case 3: 
+
+                    // Adicionando um break para encerrar o loop do usuário 
+
+                    goto voltarInicio; 
+
+                default: 
+
+                    printf("Opção inválida. Tente novamente.\n"); 
+
+                    goto voltarInicio; 
+
+            } 
+
+        } 
+
+  
+
+        do { 
+
+            printf("1. Cadastrar \n"); 
+
+            printf("2. Listar \n"); 
+
+            printf("3. Editar \n"); 
+
+            printf("4. Sair\n"); 
+
+            printf("Escolha uma opção: "); 
+
+            scanf("%d", &escolha); 
+
+  
+
+            switch (escolha) { 
+
+                case 1: 
+
+                    printf("1. Cadastrar Carro\n"); 
+
+                    printf("2. Cadastrar Clientes\n"); 
+
+                    printf("3. Cadastrar Funcionarios\n"); 
+
+                    printf("4. Cadastrar Fornecedor\n"); 
+
+                    printf("5. Sair\n"); 
+
+                    printf("Escolha uma opção: "); 
+
+                    scanf("%d", &escolha); 
+
+                    switch (escolha) { 
+
+                        case 1: 
+
+                            cadastrarCarro(&programData); 
+
+                            break; 
+
+                        case 2: 
+
+                            cadastrarCliente(&programData); 
+
+                            break; 
+
+                        case 3: 
+
+                            cadastrarFuncionario(&programData); 
+
+                            break; 
+
+                        case 4: 
+
+                            cadastrarFornecedor(&programData); 
+
+                            break; 
+
+                        case 5: 
+
+                            // Adicionando um break para encerrar o loop do usuário 
+
+                            goto voltarInicio; 
+
+                        default: 
+
+                            // Adicione um break aqui 
+
+                            break; 
+
+                    } 
+
+                    break; 
+
+  
+
+                case 2: 
+
+                    printf("1. Listar Carro\n"); 
+
+                    printf("2. Listar Clientes\n"); 
+
+                    printf("3. Listar Funcionários\n"); 
+
+                    printf("4. Listar Fornecedores\n"); 
+
+                    printf("5. Sair\n"); 
+
+                    printf("Escolha uma opção: "); 
+
+                    scanf("%d", &escolha); 
+
+                    switch (escolha) { 
+
+                        case 1: 
+
+                            listarCarros(&programData); 
+
+                            break; 
+
+                        case 2: 
+
+                            listarClientes(&programData); 
+
+                            break; 
+
+                        case 3: 
+
+                            listarFuncionarios(&programData); 
+
+                            break; 
+
+                        case 4: 
+
+                            listarFornecedores(&programData); 
+
+                            break; 
+
+                        case 5: 
+
+                            // Adicionando um break para encerrar o loop do usuário 
+
+                            goto voltarInicio; 
+
+                        default: 
+
+                            printf("Opção inválida. Tente novamente.\n"); 
+
+                            // Adicione um break aqui 
+
+                            break; 
+
+                    } 
+
+                    break; 
+
+  
+
+                case 3: 
+
+                    printf("1. Editar Carro\n"); 
+
+                    printf("2. Editar Clientes\n"); 
+
+                    printf("3. Editar Funcionarios\n"); 
+
+                    printf("4. Editar Fornecedor\n"); 
+
+                    printf("5. Sair\n"); 
+
+                    printf("Escolha uma opção: "); 
+
+                    scanf("%d", &escolha); 
+
+                    switch (escolha) { 
+
+                        case 1: 
+
+                            editarCarro(&programData); 
+
+                            break; 
+
+                        case 2: 
+
+                            editarCliente(&programData); 
+
+                            break; 
+
+                        case 3: 
+
+                            editarFuncionario(&programData); 
+
+                            break; 
+
+                        case 4: 
+
+                            editarFornecedores(&programData); 
+
+                            break; 
+
+                        case 5: 
+
+                            // Adicionando um break para encerrar o loop do usuário 
+
+                            goto voltarInicio; 
+
+                        default: 
+
+                            // Adicione um break aqui 
+
+                            break; 
+
+                    } 
+
+                    break; 
+
+  
+
+                case 4: 
+
+                    // Adicionando um break para encerrar o loop do usuário 
+
+                    goto voltarInicio; 
+
+                default: 
+
+                    printf("Opção inválida. Tente novamente.\n"); 
+
+                    // Adicione um break aqui 
+
+                    break; 
+
+            } 
+
+        } while (1); 
+
+    } while (1); 
+
+    return 0; 
+
+} 
+
+ 
+
+ 
+
+Observações:  
+
+ 
+
+senha administrador é 1020  
+
+senha cliente os próprios clientes podem cadastrar a senha   
